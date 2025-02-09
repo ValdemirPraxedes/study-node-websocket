@@ -1,4 +1,4 @@
-import documentosColecao from "./config/dbConnect.js";
+import { documentosColecao } from "./dbConnect.js";
 
 function encontrarDocumento(nome) {
     const documento = documentosColecao.findOne({nome});
