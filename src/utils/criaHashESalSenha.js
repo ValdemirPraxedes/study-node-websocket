@@ -1,4 +1,4 @@
-import { randomBytes, scryptSync } from "crypto";
+import { randomBytes, scryptSync, timingSafeEqual  } from "crypto";
 
 function criaHashESalSenha(senhaDigitada) {
   const salSenha = randomBytes(16).toString("hex");
@@ -8,4 +8,12 @@ function criaHashESalSenha(senhaDigitada) {
   return { salSenha, hashSenha };
 }
 
-export default criaHashESalSenha;
+function criaHash(senha, sal) {
+  return scryptSync(senha, sal, 64).toString("hex");
+}
+
+function verificarHashIguais(hash1, hash2) {
+  return timingSafeEqual(Buffer.from(hash1, 'hex'), Buffer.from(hash2, 'hex'));
+}
+
+export {criaHashESalSenha, criaHash, verificarHashIguais};
