@@ -1,3 +1,4 @@
+import { definirCookie } from "../utils/cookies.js";
 
 
 const socket = io();
@@ -10,7 +11,8 @@ function emitirAutenticarUsuario(dados) {
 
 
 socket.on("autenticacao_sucesso", (token) => {
-    localStorage.setItem("token", token);
+   // localStorage.setItem("token", token);
+    definirCookie("tokenJwt", token);
     alert("Usuario autenticado com sucesso");
     window.location.href = "/";
 });

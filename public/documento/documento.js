@@ -8,20 +8,21 @@ const nomeDocumento = parametros.get("nome");
 const textoEditor = document.getElementById("editor-texto");
 const tituloDocumento = document.getElementById("titulo-documento");
 const botaoExcluir = document.getElementById("excluir-documento");
+const listaUsuariosConectados = document.getElementById("usuarios-conectados");
 
 tituloDocumento.textContent = nomeDocumento || "Documento sem titulo";
 
-selecionarDocumento(nomeDocumento);
 
-textoEditor.addEventListener("keyup", () =>{
+
+textoEditor.addEventListener("keyup", () => {
   emitirTextoEditor({
-    texto: textoEditor.value, 
+    texto: textoEditor.value,
     nomeDocumento,
-});
+  });
 });
 
 function atualizaTextoEditor(texto) {
-    textoEditor.value = texto;
+  textoEditor.value = texto;
 }
 
 botaoExcluir.addEventListener("click", (evento) => {
@@ -30,10 +31,27 @@ botaoExcluir.addEventListener("click", (evento) => {
 })
 
 function alertarERedirecionar(nome) {
-  if(nome === nomeDocumento) {
+  if (nome === nomeDocumento) {
     alert(`o documento ${nome} foi excluído com sucesso!`);
     window.location.href = "/";
   }
 }
 
-export { atualizaTextoEditor, alertarERedirecionar};
+function tratarAutorizacaoSucesso(payloadToken) {
+  selecionarDocumento({ nomeDocumento, nomeUsuario: payloadToken.nome });
+}
+
+function atualizarInterfaceUsuarios(usuariosNoDocumento) {
+  listaUsuariosConectados.innerHTML = "";
+
+
+  usuariosNoDocumento.forEach(usuario => {
+    listaUsuariosConectados.innerHTML += `<li class="list-group-item">${usuario}</li>`;
+  });
+
+
+}
+
+
+
+export { atualizaTextoEditor, alertarERedirecionar, tratarAutorizacaoSucesso, atualizarInterfaceUsuarios };

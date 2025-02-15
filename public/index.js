@@ -1,4 +1,16 @@
 import { emitirAdicionarDocumento } from "./socket-front-index.js";
+import { obterCookie, removerCookie } from "./utils/cookies.js";
+
+
+const tokenJwt = obterCookie("tokenJwt");
+
+const botaoLogout = document.getElementById("botao-logout");
+
+botaoLogout.addEventListener("click", () => {
+    removerCookie("tokenJwt");
+    alert("Usuário deslogado com sucesso!");
+    window.location.href = "/login/index.html";
+});
 
 const listaDocumentos = document.getElementById("lista-documentos");
 const form = document.getElementById("form-adiciona-documento");
@@ -23,4 +35,4 @@ function removerLinkDocumento(nome) {
     listaDocumentos.removeChild(documento);
 }
 
-export {inserirLinkDocumento, removerLinkDocumento};
+export { inserirLinkDocumento, removerLinkDocumento };
